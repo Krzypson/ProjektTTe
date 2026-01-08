@@ -9,14 +9,14 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
-def root(request: Request):
+async def root(request: Request):
     return templates.TemplateResponse(
         request=request,
         name="index.html"
     )
 
 @app.get("/login", response_class=HTMLResponse)
-def login(request: Request):
+async def login(request: Request):
     return templates.TemplateResponse(
         request=request,
         name="login.html"
