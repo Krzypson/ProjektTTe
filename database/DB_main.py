@@ -1,13 +1,15 @@
+from pydantic import EmailStr
 from sqlmodel import Session, select
-from database import engine, create_db_and_tables
-from models import Users, Games, GameUsers
+from database.database import engine, create_db_and_tables
+from database.models import Users, Games, GameUsers
 from time import time_ns
 
-def add_user(username: str, password: str):
+def add_user(username: str, password: str, email: EmailStr = None):
     with Session(engine) as session:
-        user = Users(username=username, password=password)
+        user = Users(username=username, password=password, email=email)
         session.add(user)
         session.commit()
+    return "user added"
 
 def add_game(game_time: int, usernames: list[str], winners: list[str]):
     with Session(engine) as session:
@@ -27,8 +29,8 @@ def add_game(game_time: int, usernames: list[str], winners: list[str]):
 def select_user_info(username: str):
     with Session(engine) as session:
         statement = select(Users).where(Users.username == username)
-        result = session.exec(statement).one()
-    return()
+        result = session.exec(statement).first()
+    return(result)
 
 def select_gameUsers_by_username(username: str):
     with Session(engine) as session:
@@ -36,13 +38,17 @@ def select_gameUsers_by_username(username: str):
         results = session.exec(statement)
         return ()
 
-def select_game(id: int):
+def select_game(game_id: int):
     with Session(engine) as session:
-        statement = select(Games).where(Games.id == id)
+        statement = select(Games).where(Games.id == game_id)
         results = session.exec(statement)
         return()
 
-def main():
-    create_db_and_tables()
+def get_db():
+    db = Session(engine)
+    try:
+        yield db
+    finally:
+        db.close()
 
-main()
+create_db_and_tables()

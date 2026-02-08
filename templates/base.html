@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Projekt-TTe</title>
-    <link rel="/static/style" href="style.css">
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
+<div>
+    <header>
+        <nav>
+            <div class="header-content">
+                <a href="/" class="align-left" id="home_button">Home</a>
+                <a href="/account" class="align-right" id="account_button">Account</a>
+            </div>
+        </nav>
+    </header>
+</div>
     {% block content %}{% endblock %}
-    <script src="static/script.js"></script>
+    <script src="../static/script.js"></script>
 </body>
 </html>

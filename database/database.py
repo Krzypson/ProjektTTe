@@ -12,7 +12,7 @@ load_dotenv()
 
 #TEMPORARY
 test_db = True
-if test_db == False:
+if not test_db:
     database_url = os.environ.get("DATABASE_URL")
     if not database_url:
         raise ValueError("DATABASE_URL environment variable is not set!")
@@ -27,7 +27,7 @@ if test_db == False:
         }
     )
 else:
-    sqlite_file_name = "database.db"
+    sqlite_file_name = "database/database.db"
     sqlite_url = f"sqlite:///{sqlite_file_name}"
     engine = create_engine(sqlite_url, echo = False)
 

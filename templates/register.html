@@ -1,0 +1,27 @@
+{% extends"base.html"%}
+{% block content %}
+<div>
+    <h1>Register</h1>
+    <form class="form" method="post">
+        <div class="label_and_field">
+            <label for="register_username_field">username (required)</label><br>
+            <input type="text" name="register_username" id="register_username_field">
+        </div>
+        <div class="label_and_field">
+            <label for="register_email_field">email</label><br>
+            <input type="email" name="register_email" id="register_email_field">
+        </div>
+        <div class="label_and_field">
+            <label for="register_password_field">password (required)</label><br>
+            <input type="password" name="register_password" id="register_password_field" class="password_field">
+        </div>
+        <div class="label_and_field">
+            <label for="register_confirm_password_field">confirm password (required)</label><br>
+            <input type="password" name="register_confirm_password" id="register_confirm_password_field" class="password_field">
+        </div>
+        <button type="submit" id="register_button">register</button>
+        <div><p>{{ register_response }}</p></div>
+        <p>Already have an account? <a href="/login">Login here</a></p>
+    </form>
+</div>
+{% endblock %}

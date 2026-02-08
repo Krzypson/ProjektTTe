@@ -1,3 +1,4 @@
+from pydantic import EmailStr
 from sqlmodel import SQLModel, Field
 
 class Games(SQLModel, table=True):
@@ -8,7 +9,7 @@ class Games(SQLModel, table=True):
 class Users(SQLModel, table=True):
     username: str = Field(index=True, min_length=4, max_length=32, unique=True, primary_key=True)
     password: str = Field(min_length=4)
-    email: str = Field(default= None, unique=True)
+    email: EmailStr | None = Field(default= None, unique=True)
 
 class GameUsers(SQLModel, table=True):
     game_id: int = Field(foreign_key="games.id", primary_key=True)
