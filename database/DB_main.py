@@ -1,8 +1,7 @@
 from pydantic import EmailStr
-from sqlmodel import Session, select
+from sqlmodel import Session, select, func
 from database.database import engine, create_db_and_tables
 from database.models import Users, Games, GameUsers
-from time import time_ns
 
 def add_user(username: str, password: str, email: EmailStr = None):
     with Session(engine) as session:
@@ -11,44 +10,34 @@ def add_user(username: str, password: str, email: EmailStr = None):
         session.commit()
     return "user added"
 
-def add_game(game_time: int, usernames: list[str], winners: list[str]):
+def add_game(game_id: int, game_time: int, player_count: int):
     with Session(engine) as session:
-        game = Games(id= time_ns(), game_time=game_time)
+        game = Games(id=game_id, game_time=game_time, player_count=player_count)
         session.add(game)
-        for username in usernames:
-            if username in winners:
-                game_winner = GameUsers(game_id=game.id, user_id=username, winner=True)
-                session.add(
-                    game_winner
-                )
-            else:
-                game_user = GameUsers(game_id=game.id, user_id=username)
-                session.add(game_user)
-        session.commit()
+    return "game added"
 
 def select_user_info(username: str):
     with Session(engine) as session:
         statement = select(Users).where(Users.username == username)
         result = session.exec(statement).first()
-    return(result)
+    return result
 
-def select_gameUsers_by_username(username: str):
+def select_game_count_by_username(username: str):
     with Session(engine) as session:
-        statement = select(GameUsers).where(GameUsers.user_id == username)
-        results = session.exec(statement)
-        return ()
+        statement = select(func.count(GameUsers.game_id)).where(GameUsers.user_id == username)
+        results = session.exec(statement).first()
+        return results
 
-def select_game(game_id: int):
+def select_won_games_count_by_username(username: str):
     with Session(engine) as session:
-        statement = select(Games).where(Games.id == game_id)
-        results = session.exec(statement)
-        return()
+        statement = select(func.count(GameUsers.game_id)).where(GameUsers.user_id == username, GameUsers.winner == True)
+        results = session.exec(statement).first()
+        return results
 
-def get_db():
-    db = Session(engine)
-    try:
-        yield db
-    finally:
-        db.close()
+def select_mean_game_time_by_username(username: str):
+    with Session(engine) as session:
+        statement = select(func.avg(Games.game_time)).select_from(Games).join(GameUsers, Games.id == GameUsers.game_id).where(GameUsers.user_id == username)
+        results = session.exec(statement).first()
+        return results
 
 create_db_and_tables()

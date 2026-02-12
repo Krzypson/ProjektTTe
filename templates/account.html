@@ -3,8 +3,7 @@
 
 <p><a class="align-right logout" href="/logout">logout</a></p>
 
-<p>this is the account page with stats and stuff</p>
-<div class="account_table">
+<div class="account_table element" >
     <table>
         <tr class="table_header"><th colspan="2">INFO</th></tr>
         <tr>
@@ -29,4 +28,17 @@
         </tr>
     </table>
 </div>
+
+<div class="element">
+    {% macro build_list(servers) %}
+    <ul>
+        {% for server in servers %}
+            <li>{{server}}</li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+</div>
+
+<a href="/game">game</a>
+
 {% endblock %}

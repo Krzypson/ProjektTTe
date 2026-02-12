@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Game</h1>
+<p>{{ timer }}</p>
+<table class="side_table">
+    <tr>
+        <th>players</th>
+        <th>field</th>
+    </tr>
+    <tbody id="playersList">
+    </tbody>
+</table>
+<div class="element">
+        {% include "chat.html" with context %}
+</div>
+{{ game }}
+<button>ready</button>
+<button>roll dice</button>
+
+<script>
+    const gameUsername = "{{ username }}";
+    const gameRoomId = "{{ room_id }}";
+
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const host = window.location.host;
+    window.gameWebSocket = new WebSocket(`${protocol}//${host}/ws/${gameRoomId}/${gameUsername}`);
+
+    window.gameWebSocket.onopen = function(event) {
+        console.log("Game WebSocket connected");
+    };
+
+    window.gameWebSocket.onerror = function(event) {
+        console.error("Game WebSocket error:", event);
+    };
+
+    window.gameWebSocket.onclose = function(event) {
+        console.log("Game WebSocket disconnected");
+    };
+
+    // Single unified message handler
+    window.gameWebSocket.onmessage = function(event) {
+        const messageText = event.data;
+
+        if (messageText.startsWith('PLAYERLIST:')) {
+            const players = messageText.replace('PLAYERLIST:', '').split(',');
+            updatePlayerList(players);
+        } else {
+            // Handle chat messages
+            displayChatMessage(messageText);
+        }
+    };
+
+    function displayChatMessage(message) {
+        let messages = document.getElementById('messages');
+        let li = document.createElement('li');
+        let timestamp = new Date().toLocaleTimeString("pl-PL");
+        li.textContent = `[${timestamp}] ${message}`;
+        messages.insertBefore(li, messages.firstChild);
+    }
+
+    function sendMessage(event) {
+        event.preventDefault();
+        const messageText = document.getElementById("messageText");
+        const messageValue = messageText.value.trim();
+
+        if (messageValue && window.gameWebSocket && window.gameWebSocket.readyState === WebSocket.OPEN) {
+            window.gameWebSocket.send(messageValue);
+            messageText.value = '';
+        } else if (!messageValue) {
+            console.warn("Empty message not sent");
+        } else {
+            console.error("WebSocket is not connected");
+        }
+    }
+
+    function updatePlayerList(players) {
+        const playersList = document.getElementById('playersList');
+        playersList.innerHTML = ''; // Clear existing list
+
+        players.forEach(player => {
+            if (player.trim()) { // Skip empty strings
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.textContent = player.trim();
+                tr.appendChild(td);
+                playersList.appendChild(tr);
+            }
+        });
+    }
+
+</script>
+
+{% endblock content %}
