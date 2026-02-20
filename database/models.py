@@ -15,13 +15,3 @@ class GameUsers(SQLModel, table=True):
     game_id: int = Field(foreign_key="games.id", primary_key=True)
     user_id: str = Field(foreign_key="users.username", primary_key=True)
     winner: bool = Field(default=False)
-    #do amazonek
-    #teamA: bool = Field(default=False)
-
-#do amazonek
-"""class Game_Presets(SQLModel, table=True):
-    id: int = Field(primary_key=True)
-    players: int
-    teamA_size: int
-    treasure_count: int
-    traps_count: int"""

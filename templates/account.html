@@ -1,44 +1,44 @@
 {% extends"base.html"%}
 {% block content %}
 
-<p><a class="align-right logout" href="/logout">logout</a></p>
-
-<div class="account_table element" >
-    <table>
-        <tr class="table_header"><th colspan="2">INFO</th></tr>
-        <tr>
-            <td>username</td>
-            <td>{{username}}</td>
-        </tr>
-        <tr>
-            <td>email</td>
-            <td>{{email}}</td>
-        </tr>
-        <tr>
-            <td>games</td>
-            <td>{{games}}</td>
-        </tr>
-        <tr>
-            <td>wins</td>
-            <td>{{wins}}</td>
-        </tr>
-        <tr>
-            <td>mean game time</td>
-            <td>{{mean_game_time}}</td>
-        </tr>
-    </table>
-</div>
-
+<p><a id="logout" class="align-right" href="/logout">logout</a></p>
 <div class="element">
-    {% macro build_list(servers) %}
-    <ul>
-        {% for server in servers %}
-            <li>{{server}}</li>
-        {% endfor %}
-    </ul>
-{% endmacro %}
-</div>
+    <div class="element central_element" id="account_info_table" >
+        <table class="vertical_table">
+            <tr><th>username</th><td>{{username}}</td></tr>
+            <tr><th>email</th><td>{{email}}</td></tr>
+            <tr><th>games</th><td>{{games}}</td></tr>
+            <tr><th>wins</th><td>{{wins}}</td></tr>
+            <tr><th>mean game time</th><td>{{mean_game_time}}</td></tr>
+        </table>
+    </div>
 
-<a href="/game">game</a>
+    <div class="element central_element" id="rooms_table">
+
+        <table>
+            <tr>
+                <th>name</th>
+                <th>players</th>
+                <th>join</th>
+            </tr>
+            {% for room in rooms %}
+            <tr>
+                <td id='{{room["room_id"]}}'>{{ room["room_id"] }}</td>
+                <td>{{ room["player_count"] }}/{{ room["max_players"]}}</td>
+                <td><a href="/game/{{room['room_id']}}"><button class="table_button">join</button></a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {{ game_error }}
+    </div>
+
+    <div class="element central_element" id="create_game">
+        <form action="/create_room" method="post">
+            <input type="text" name="input_room_name" id="input_room_name" placeholder="room name">
+            <input type="number" name="input_max_players" id="input_max_players" placeholder="max players">
+        <button type="submit" id="create_room_button">create room</button>
+        </form>
+    </div>
+</div>
 
 {% endblock %}

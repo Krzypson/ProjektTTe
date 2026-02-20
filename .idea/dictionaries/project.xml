@@ -2,6 +2,7 @@
   <dictionary name="project">
     <words>
       <w>endblock</w>
+      <w>endfor</w>
       <w>playerlist</w>
     </words>
   </dictionary>

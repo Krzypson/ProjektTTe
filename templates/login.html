@@ -1,10 +1,10 @@
 {% extends"base.html"%}
 {% block content %}
 
-<div>
+<div class="element">
 <h1>Login</h1>
-    <div class="form">
-        <form method="post", action="/token">
+    <div class="element" id="login_form">
+        <form method="post" action="/token">
         <div class="label_and_field">
             <label for="login_field">username</label><br>
             <input type="text" name="username" id="login_field">

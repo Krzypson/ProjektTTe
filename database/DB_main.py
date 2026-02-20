@@ -14,7 +14,15 @@ def add_game(game_id: int, game_time: int, player_count: int):
     with Session(engine) as session:
         game = Games(id=game_id, game_time=game_time, player_count=player_count)
         session.add(game)
+        session.commit()
     return "game added"
+
+def add_game_user(game_id: int, user_id: str, winner: bool):
+    with Session(engine) as session:
+        game_user = GameUsers(game_id=game_id, user_id=user_id, winner=winner)
+        session.add(game_user)
+        session.commit()
+    return "gameuser added"
 
 def select_user_info(username: str):
     with Session(engine) as session:

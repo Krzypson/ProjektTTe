@@ -1,0 +1,18 @@
+<div id="gameBoard" class="element">
+    <ol>
+        {% for i in range( track_length ) %}
+        <li class="track_field" id="{{ i }}">
+            <div class="player_container"
+                 data-occupants="">
+                {% if i == 0 %}
+                Start
+                {% elif i == track_length - 1 %}
+                End
+                {% else %}
+                {{ i }}
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </ol>
+</div>

@@ -1,4 +1,4 @@
-body{
+body {
     display: flex;
     flex-flow: column;
     font-family: sans-serif;
@@ -6,16 +6,20 @@ body{
     text-align: center;
 }
 
-header{
-    display: flex;
-    flex-flow: column;
+header {
     background-color: lightblue;
-    font-family: sans-serif;
-    padding: 20px;
     font-size: 30px;
     text-decoration: none;
-    margin: auto;
     text-align: center;
+    padding: 20px;
+}
+
+header ul{
+    list-style-type: none;
+    justify-content: space-around;
+    padding: 0;
+    display: flex;
+    margin: auto;
 }
 
 button{
@@ -32,10 +36,17 @@ button{
 table{
     border-spacing: 0;
     border-collapse: collapse;
-    width: 50%;
     margin: auto;
-    text-align: center;
     border: 2px solid black;
+    width: 100%;
+    display: table;
+}
+
+.vertical_table th{
+    border: 1px solid black;
+    text-align: left;
+    padding: 5px;
+    width: 50%;
 }
 
 th{
@@ -48,62 +59,71 @@ td{
     text-align: left;
     border: 1px solid black;
     padding: 5px;
-    margin: 0;
-    width: 50%;
 }
 
 .align-left{
     float: left;
 }
+
 .align-right{
     float: right;
 }
 
-.logout{
+#logout{
     margin-right: 20px;
 }
 
-.form{
+form{
     width: 50%;
     margin: auto;
     text-align: center;
 }
 
+form > button{
+    width: 90%;
+}
+
 .element{
-    margin: 20px;
+    text-align: center;
+    padding: 10px;
+    border: 2px solid red;
 }
 
 .label_and_field{
     display: block;
-    margin: 10px 10px 5px;
+    margin: auto ;
 }
 
 .label_and_field label{
     float: left;
 }
-.form input{
+input{
     width: 100%;
     height: 25px;
-    text-align: center;
+    text-align: left;
+    margin: auto;
+    padding: 5px;
 }
 
-.form button{
-    width: 90%;
-}
-
-.chat_box{
+#chat_box{
     border: 2px solid black;
-    width: 30%;
     height: 500px;
     text-align: left;
-    padding: 10px;
     margin: 10px;
 
 }
 
-.chat_input_box{
+#chat_input_box {
+    display: inline-flex;
     width: 100%;
     height: 15%;
+}
+
+#chat_input_box * {
+    height: 30px;
+    margin: auto;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 #messages {
@@ -116,4 +136,52 @@ td{
 
 #messages li {
     padding: 5px 0;
+}
+
+#gameBoard {
+    height: auto;
+    margin: auto;
+}
+
+#game_container {
+     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+#game_container > .element {
+    flex: 1;
+}
+
+#game_container > .element:nth-child(2) {
+    flex: 2;
+}
+
+ol {
+    width: 100%;
+    margin: auto;
+}
+
+ol li {
+    background-color: green;
+    color: white;
+    height: 20px;
+    width: auto;
+    min-width: 20px;
+    max-width: 50px;
+
+    padding: 5px;
+    margin: 5px;
+}
+
+.central_element{
+    margin: auto;
+    width: 70%;
+}
+
+.table_button{
+    width: 100%;
+    height: 100%;
 }
