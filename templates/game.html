@@ -10,6 +10,8 @@
     <div class="element">
         {% include "racetrack.html" with context %}
         <div id="game-status" style="margin-top: 20px; font-size: 20px; font-weight: bold;"></div>
+        <button id="readyButton" onclick="toggleReady()">Ready</button>
+        <button id="rollButton" onclick="rollDice()" disabled>roll dice</button>
     </div>
 
     <div class="element align-right">
@@ -23,8 +25,7 @@
     </div>
 </div>
 
-<button id="readyButton" onclick="toggleReady()">Ready</button>
-<button id="rollButton" onclick="rollDice()" disabled>roll dice</button>
+
 
 
 <script>
