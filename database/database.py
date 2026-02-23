@@ -19,7 +19,7 @@ if not test_db:
 
     engine = create_engine(
         database_url,
-        echo=True,  # Set to False in production
+        echo=True,  # Set to False later
         connect_args={
             "ssl": {
                 "ca": "./ssl/DigiCertGlobalRootG2.crt.pem"

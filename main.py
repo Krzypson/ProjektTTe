@@ -100,7 +100,7 @@ async def login_for_access_token(
 
     token_max_age = int(timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES).total_seconds())
     token_end_time = datetime.now().timestamp() + token_max_age
-    print(token_end_time)
+    #print(token_end_time)
 
     response = responses.RedirectResponse(url="/account", status_code=302)
     response.set_cookie(
